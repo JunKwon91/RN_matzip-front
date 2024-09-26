@@ -2,12 +2,28 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HeaderButton from './HeaderButton';
 import { colors } from '@/constants';
+import { CompositeNavigationProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { FeedStackParamList } from '@/navigations/Stack/FeedStackNavigator';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { MainDrawerParamList } from '@/navigations/drawer/MainDrawerNavigarot';
 
-interface FeedHomeHeaderLeftProps {}
-
-function FeedHomeHeaderLeft({}: FeedHomeHeaderLeftProps) {
+type FeedHomeHeaderLeftProps = CompositeNavigationProp<
+  StackNavigationProp<FeedStackParamList>,
+  DrawerNavigationProp<MainDrawerParamList>
+>;
+function FeedHomeHeaderLeft(navigation: FeedHomeHeaderLeftProps) {
   return (
-    <HeaderButton icon={<Ionicons name={'menu'} color={colors.BLACK} size={25} />} />
+    <HeaderButton
+      icon={
+        <Ionicons
+          name={'menu'}
+          color={colors.BLACK}
+          size={25}
+          onPress={() => navigation.openDrawer()}
+        />
+      }
+    />
   );
 }
 

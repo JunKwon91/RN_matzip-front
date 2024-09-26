@@ -28,7 +28,10 @@ function FeedStackNavigator() {
       <Stack.Screen
         name={feedNavigations.FEED_HOME}
         component={FeedHomeScreen}
-        options={{ headerTitle: '피드', headerLeft: FeedHomeHeaderLeft }}
+        options={({ navigation }) => ({
+          headerTitle: '피드',
+          headerLeft: () => FeedHomeHeaderLeft(navigation),
+        })}
       />
     </Stack.Navigator>
   );
