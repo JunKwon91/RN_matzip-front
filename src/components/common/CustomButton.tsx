@@ -1,6 +1,6 @@
 import React from 'react';
+import { colors } from '@/constants';
 import { StyleSheet, PressableProps, Dimensions } from 'react-native';
-import { colors } from '../constants';
 import styled from 'styled-components/native';
 
 const PressableBtn = styled.Pressable<{ variant: string; inValid: boolean }>`

@@ -3,26 +3,26 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components/native';
 import Octicons from 'react-native-vector-icons/Octicons';
 
-import InputField from '@/components/InputField';
 import { colors, mapNavigations } from '@/constants';
 import { MapStackParamList } from '@/navigations/Stack/MapStackNavigator';
 import { StackScreenProps } from '@react-navigation/stack';
-import CustomButton from '@/components/CustomButton';
 import useForm from '@/hooks/useForm';
 import { TextInput } from 'react-native';
 import { getDateWithSeparator, validateAddPost } from '@/utils';
-import AddPostHeaderRight from '@/components/AddPostHeaderRight';
 import useMutateCreatePost from '@/hooks/queries/useMutateCreatePost';
 import { MarkerColor } from '@/types/domain';
 import useGetAddress from '@/hooks/useGetAddress';
-import MarkerSelector from '@/components/MarkerSelector';
-import ScoreInput from '@/components/ScoreInput';
-import DatePickerOption from '@/components/DatePickerOption';
+import ScoreInput from '@/components/post/ScoreInput';
+import DatePickerOption from '@/components/post/DatePickerOption';
 import useModal from '@/hooks/useModal';
-import ImageInput from '@/components/ImageInput';
+import ImageInput from '@/components/post/ImageInput';
 import usePermission from '@/hooks/usePermission';
 import useImagePicker from '@/hooks/useImagePicker';
-import PreviewImageList from '@/components/PreviewImageList';
+import AddPostHeaderRight from '@/components/post/AddPostHeaderRight';
+import InputField from '@/components/common/InputField';
+import CustomButton from '@/components/common/CustomButton';
+import MarkerSelector from '@/components/post/MarkerSelector';
+import PreviewImageList from '@/components/common/PreviewImageList';
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -155,6 +155,7 @@ function AddPostScreen({ route, navigation }: AddPostScreenProps) {
               imageUris={imagePicker.imageUris}
               onDelete={imagePicker.delete}
               onChangeOrder={imagePicker.changeOrder}
+              showOption
             />
           </ImagesViewer>
 

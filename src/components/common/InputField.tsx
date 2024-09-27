@@ -1,7 +1,7 @@
 import React, { ForwardedRef, forwardRef, ReactNode, useRef } from 'react';
 import { Dimensions, TextInput, TextInputProps } from 'react-native';
-import { colors } from '../constants';
-import { mergeRefs } from '../utils';
+import { colors } from '../../constants';
+import { mergeRefs } from '../../utils';
 import styled from 'styled-components/native';
 
 const deviceHeight = Dimensions.get('screen').height;

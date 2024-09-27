@@ -1,11 +1,14 @@
 import { ResponsePost } from '@/api';
-import { colors } from '@/constants';
+import { colors, feedNavigations } from '@/constants';
+import { FeedStackParamList } from '@/navigations/Stack/FeedStackNavigator';
 import { getDateWithSeparator } from '@/utils';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { Dimensions, Platform } from 'react-native';
 import styled from 'styled-components/native';
 
-const Container = styled.View`
+const Container = styled.Pressable`
   flex: 1;
   margin: 12px 5px;
 `;
@@ -53,9 +56,14 @@ const DescriptionText = styled.Text`
 interface FeedItemProps {
   post: ResponsePost;
 }
+type Navigation = StackNavigationProp<FeedStackParamList>;
 function FeedItem({ post }: FeedItemProps) {
+  const navigation = useNavigation<Navigation>();
+  const handelPressPeed = () => {
+    navigation.navigate(feedNavigations.FEED_DETAIL, { id: post.id });
+  };
   return (
-    <Container>
+    <Container onPress={handelPressPeed}>
       <ContentContainer>
         {post.images.length > 0 && (
           <ImageContainer key={post.id}>

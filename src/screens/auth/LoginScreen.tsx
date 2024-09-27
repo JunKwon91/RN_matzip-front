@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
-import InputField from '@/components/InputField';
-import CustomButton from '@/components/CustomButton';
 import useForm from '@/hooks/useForm';
 import { validateLogin } from '../../utils';
 import useAuth from '@/hooks/queries/useAuth';
 import styled from 'styled-components/native';
+import InputField from '@/components/common/InputField';
+import CustomButton from '@/components/common/CustomButton';
 
 const Container = styled.SafeAreaView`
   flex: 1;

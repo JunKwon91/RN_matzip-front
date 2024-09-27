@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import CustomMarker from './CustomMarker';
+import CustomMarker from '../common/CustomMarker';
 import styled from 'styled-components/native';
 import { colors } from '@/constants';
 import { MarkerColor } from '@/types/domain';

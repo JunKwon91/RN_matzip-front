@@ -48,10 +48,16 @@ const ImageButton = styled.Pressable<{
 
 interface PreviewImageListProps {
   imageUris: ImageUri[];
-  onDelete: (uri: string) => void;
+  onDelete?: (uri: string) => void;
   onChangeOrder?: (fromIndex: number, toIndex: number) => void;
+  showOption?: boolean;
 }
-function PreviewImageList({ imageUris, onDelete, onChangeOrder }: PreviewImageListProps) {
+function PreviewImageList({
+  imageUris,
+  onDelete,
+  onChangeOrder,
+  showOption = false,
+}: PreviewImageListProps) {
   return (
     <ScrollContainer horizontal showsHorizontalScrollIndicator={false}>
       <Container>
@@ -69,33 +75,41 @@ function PreviewImageList({ imageUris, onDelete, onChangeOrder }: PreviewImageLi
                 }}
               />
 
-              <ImageButton
-                isDeleteButton={true}
-                onPress={() => onDelete && onDelete(uri)}
-              >
-                <Ionicons name={'close'} size={16} color={colors.WHITE} />
-              </ImageButton>
+              {showOption && (
+                <>
+                  <ImageButton
+                    isDeleteButton={true}
+                    onPress={() => onDelete && onDelete(uri)}
+                  >
+                    <Ionicons name={'close'} size={16} color={colors.WHITE} />
+                  </ImageButton>
 
-              {index > 0 && (
-                <ImageButton
-                  moveButton={'left'}
-                  onPress={() => onChangeOrder && onChangeOrder(index, index - 1)}
-                >
-                  <Ionicons name={'arrow-back-outline'} size={16} color={colors.WHITE} />
-                </ImageButton>
-              )}
+                  {index > 0 && (
+                    <ImageButton
+                      moveButton={'left'}
+                      onPress={() => onChangeOrder && onChangeOrder(index, index - 1)}
+                    >
+                      <Ionicons
+                        name={'arrow-back-outline'}
+                        size={16}
+                        color={colors.WHITE}
+                      />
+                    </ImageButton>
+                  )}
 
-              {index < imageUris.length - 1 && (
-                <ImageButton
-                  moveButton={'right'}
-                  onPress={() => onChangeOrder && onChangeOrder(index, index + 1)}
-                >
-                  <Ionicons
-                    name={'arrow-forward-outline'}
-                    size={16}
-                    color={colors.WHITE}
-                  />
-                </ImageButton>
+                  {index < imageUris.length - 1 && (
+                    <ImageButton
+                      moveButton={'right'}
+                      onPress={() => onChangeOrder && onChangeOrder(index, index + 1)}
+                    >
+                      <Ionicons
+                        name={'arrow-forward-outline'}
+                        size={16}
+                        color={colors.WHITE}
+                      />
+                    </ImageButton>
+                  )}
+                </>
               )}
             </ImageContainer>
           );

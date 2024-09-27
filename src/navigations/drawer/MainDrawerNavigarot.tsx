@@ -8,11 +8,11 @@ import { colors, mainNavigations } from '@/constants';
 import { NavigatorScreenParams, RouteProp } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
 import CustomDrawerContent from './CustomDrawerContent';
-import FeedStackNavigator from '../Stack/FeedStackNavigator';
+import FeedStackNavigator, { FeedStackParamList } from '../Stack/FeedStackNavigator';
 
 export type MainDrawerParamList = {
   [mainNavigations.HOME]: NavigatorScreenParams<MapStackParamList>;
-  [mainNavigations.FEED]: undefined;
+  [mainNavigations.FEED]: NavigatorScreenParams<FeedStackParamList>;
   [mainNavigations.CALENDAR]: undefined;
 };
 

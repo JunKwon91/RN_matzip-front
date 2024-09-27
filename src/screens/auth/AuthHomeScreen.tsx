@@ -1,10 +1,10 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import CustomButton from '@/components/CustomButton';
 import { Dimensions } from 'react-native';
 import { AuthStackParamList } from '@/navigations/Stack/AuthStackNavigator';
 import { authNavigations } from '@/constants/navigations';
 import styled from 'styled-components/native';
+import CustomButton from '@/components/common/CustomButton';
 
 const Container = styled.SafeAreaView`
   flex: 1;

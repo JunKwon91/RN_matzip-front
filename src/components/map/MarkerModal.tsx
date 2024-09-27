@@ -6,8 +6,8 @@ import styled from 'styled-components/native';
 
 import { colors } from '@/constants';
 import useGetPost from '@/hooks/queries/useGetPost';
-import CustomMarker from './CustomMarker';
 import { getDateWithSeparator } from '@/utils';
+import CustomMarker from '../common/CustomMarker';
 
 const OptionBackground = styled.SafeAreaView`
   flex: 1;
