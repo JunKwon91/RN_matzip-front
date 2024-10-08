@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, Insets, Platform, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import { colorHex, colors, feedNavigations } from '@/constants';
 import useGetPost from '@/hooks/queries/useGetPost';
@@ -9,9 +9,20 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getLocaleFormat } from '@/utils';
 import PreviewImageList from '@/components/common/PreviewImageList';
+import CustomButton from '@/components/common/CustomButton';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const Container = styled.ScrollView`
+const Container = styled.ScrollView<{ insets: Insets }>`
   position: relative;
+
+  ${({ insets }) =>
+    insets.bottom
+      ? `
+    margin-bottom: ${insets.bottom + 50}px;
+  `
+      : `
+    margin-bottom: 65px;
+  `}
 `;
 const HeaderContainer = styled.SafeAreaView`
   position: absolute;
@@ -41,7 +52,6 @@ const EmptyImageContainer = styled.View`
   border-width: 1px;
 `;
 const EmptyText = styled.Text``;
-
 const ContentContainer = styled.View`
   padding: 20px 20px;
   background-color: ${colors.WHITE};
@@ -96,6 +106,36 @@ const ImageContentsContainer = styled.View`
   padding: 15px 0px;
   background-color: ${colors.WHITE};
 `;
+const BottomContainer = styled.View<{ paddingBottom: number }>`
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  align-items: flex-end;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  background-color: ${colors.WHITE};
+  border-top-width: ${StyleSheet.hairlineWidth}px;
+  border-color: ${colors.GRAY_200};
+  padding-bottom: ${({ paddingBottom }) => paddingBottom}px;
+`;
+const TabContainer = styled.View<{ isTabContainerNoInsets: boolean }>`
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  ${({ isTabContainerNoInsets }) =>
+    isTabContainerNoInsets &&
+    `
+    margin-bottom: 10px;
+  `}
+`;
+const BookmarkBtn = styled.Pressable`
+  background-color: ${colors.PINK_700};
+  height: 100%;
+  padding: 0px 5px;
+  justify-content: center;
+  border-radius: 3px;
+`;
 
 type FeedDetailScreenProps = StackScreenProps<
   FeedStackParamList,
@@ -104,86 +144,110 @@ type FeedDetailScreenProps = StackScreenProps<
 function FeedDetailScreen({ route, navigation }: FeedDetailScreenProps) {
   const { id } = route.params;
   const { data: post, isPending, isError } = useGetPost(id);
+  const insets = useSafeAreaInsets();
 
   if (isPending || isError) {
     return <></>;
   }
 
   return (
-    <Container>
-      <HeaderContainer>
-        <Header>
-          <Octicons
-            name={'arrow-left'}
-            size={30}
-            color={colors.WHITE}
-            onPress={() => navigation.goBack()}
-          />
-          <Ionicons name={'ellipsis-vertical'} size={30} color={colors.WHITE} />
-        </Header>
-      </HeaderContainer>
+    <>
+      <Container insets={insets} scrollIndicatorInsets={{ right: 1 }}>
+        <HeaderContainer>
+          <Header>
+            <Octicons
+              name={'arrow-left'}
+              size={30}
+              color={colors.WHITE}
+              onPress={() => navigation.goBack()}
+            />
+            <Ionicons name={'ellipsis-vertical'} size={30} color={colors.WHITE} />
+          </Header>
+        </HeaderContainer>
 
-      <ImageContainer>
-        {post?.images.length > 0 && (
-          <Image
-            source={{
-              uri: `${
-                Platform.OS === 'android'
-                  ? 'http://10.0.2.2:3030/'
-                  : 'http://localhost:3030/'
-              }${post?.images[0].uri}`,
-            }}
-            resizeMode={'cover'}
-          />
+        <ImageContainer>
+          {post?.images.length > 0 && (
+            <Image
+              source={{
+                uri: `${
+                  Platform.OS === 'android'
+                    ? 'http://10.0.2.2:3030/'
+                    : 'http://localhost:3030/'
+                }${post?.images[0].uri}`,
+              }}
+              resizeMode={'cover'}
+            />
+          )}
+          {post.images.length === 0 && (
+            <EmptyImageContainer>
+              <EmptyText>No Image</EmptyText>
+            </EmptyImageContainer>
+          )}
+        </ImageContainer>
+
+        <ContentContainer>
+          <AddressContainer>
+            <Ionicons name={'location'} size={10} color={colors.GRAY_500} />
+            <AddressText ellipsizeMode={'tail'} numberOfLines={1}>
+              {post.address}
+            </AddressText>
+          </AddressContainer>
+
+          <TitleText>{post.title}</TitleText>
+
+          <InfoContainer>
+            <InfoRow>
+              <InfoColumn>
+                <InfoColumnKeyText>방문날짜</InfoColumnKeyText>
+                <InfoColumnValueText>{getLocaleFormat(post.date)}</InfoColumnValueText>
+              </InfoColumn>
+
+              <InfoColumn>
+                <InfoColumnKeyText>평점</InfoColumnKeyText>
+                <InfoColumnValueText>{post.score}점</InfoColumnValueText>
+              </InfoColumn>
+            </InfoRow>
+
+            <InfoRow>
+              <InfoColumn>
+                <InfoColumnKeyText>마커색상</InfoColumnKeyText>
+                <MarkerColor bg={colorHex[post.color]} />
+              </InfoColumn>
+            </InfoRow>
+          </InfoContainer>
+
+          <DescriptionText>{post.description}</DescriptionText>
+        </ContentContainer>
+
+        {post.images.length > 0 && (
+          <ImageContentsContainer>
+            <PreviewImageList imageUris={post.images} />
+          </ImageContentsContainer>
         )}
-        {post.images.length === 0 && (
-          <EmptyImageContainer>
-            <EmptyText>No Image</EmptyText>
-          </EmptyImageContainer>
-        )}
-      </ImageContainer>
+      </Container>
 
-      <ContentContainer>
-        <AddressContainer>
-          <Ionicons name={'location'} size={10} color={colors.GRAY_500} />
-          <AddressText ellipsizeMode={'tail'} numberOfLines={1}>
-            {post.address}
-          </AddressText>
-        </AddressContainer>
-
-        <TitleText>{post.title}</TitleText>
-
-        <InfoContainer>
-          <InfoRow>
-            <InfoColumn>
-              <InfoColumnKeyText>방문날짜</InfoColumnKeyText>
-              <InfoColumnValueText>{getLocaleFormat(post.date)}</InfoColumnValueText>
-            </InfoColumn>
-
-            <InfoColumn>
-              <InfoColumnKeyText>평점</InfoColumnKeyText>
-              <InfoColumnValueText>{post.score}점</InfoColumnValueText>
-            </InfoColumn>
-          </InfoRow>
-
-          <InfoRow>
-            <InfoColumn>
-              <InfoColumnKeyText>마커색상</InfoColumnKeyText>
-              <MarkerColor bg={colorHex[post.color]} />
-            </InfoColumn>
-          </InfoRow>
-        </InfoContainer>
-
-        <DescriptionText>{post.description}</DescriptionText>
-      </ContentContainer>
-
-      {post.images.length > 0 && (
-        <ImageContentsContainer>
-          <PreviewImageList imageUris={post.images} />
-        </ImageContentsContainer>
-      )}
-    </Container>
+      <BottomContainer paddingBottom={insets.bottom}>
+        <TabContainer isTabContainerNoInsets={insets.bottom === 0}>
+          <BookmarkBtn
+            style={({ pressed }) => pressed && styles.bookmarkPressedContainer}
+          >
+            <Octicons name={'star-fill'} size={30} color={colors.GRAY_100} />
+          </BookmarkBtn>
+          <CustomButton
+            label={'위치보기'}
+            size={'medium'}
+            variant={'filled'}
+            onPress={() => {}}
+          />
+        </TabContainer>
+      </BottomContainer>
+    </>
   );
 }
+const styles = StyleSheet.create({
+  bookmarkPressedContainer: {
+    opacity: 0.5,
+  },
+});
 
 export default FeedDetailScreen;

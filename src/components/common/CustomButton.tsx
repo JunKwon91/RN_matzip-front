@@ -15,7 +15,7 @@ const PressableBtn = styled.Pressable<{ variant: string; inValid: boolean }>`
   opacity: ${({ inValid }) => (inValid ? 0.5 : 1)};
 `;
 const PressableTextContainer = styled.View<{ size: string }>`
-  width: 100%;
+  width: ${({ size }) => (size === 'large' ? '100%' : '50%')};
   padding: ${({ size }) =>
     size === 'large'
       ? deviceHeight > 700

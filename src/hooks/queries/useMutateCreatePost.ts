@@ -13,7 +13,7 @@ function useMutateCreatePost(mutationOptions?: UseMutationCustomOptions) {
       // 서버에서 최신 데이터를 다시 가져오도록 한다.
       queryClient.invalidateQueries({
         // queryKey: 무효화할 쿼리의 키를 지정한다.(여기서는 MARKER와 GET_MARKERS라는 두 개의 queryKey가 존재)
-        queryKey: [queryKeys.MARKER, queryKeys.GET_MARKERS],
+        queryKey: [queryKeys.POST, queryKeys.GET_POSTS],
         // ㄴ 이 두 queryKey와 일치하는 모든 쿼리 데이터를 무효화하여, 다음번 쿼리 시 최신 데이터를 가져오게 한다.
       });
 
