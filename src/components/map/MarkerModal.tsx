@@ -10,7 +10,7 @@ import { getDateWithSeparator } from '@/utils';
 import CustomMarker from '../common/CustomMarker';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { FeedStackParamList } from '@/navigations/Stack/FeedStackNavigator';
+import { FeedStackParamList } from '@/navigations/stack/FeedStackNavigator';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { MainDrawerParamList } from '@/navigations/drawer/MainDrawerNavigarot';
 

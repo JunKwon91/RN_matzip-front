@@ -1,7 +1,7 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { AuthStackParamList } from '@/navigations/Stack/AuthStackNavigator';
+import { AuthStackParamList } from '@/navigations/stack/AuthStackNavigator';
 import { authNavigations } from '@/constants/navigations';
 import styled from 'styled-components/native';
 import CustomButton from '@/components/common/CustomButton';

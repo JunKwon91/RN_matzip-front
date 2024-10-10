@@ -4,7 +4,7 @@ import HeaderButton from '../common/HeaderButton';
 import { colors } from '@/constants';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { FeedStackParamList } from '@/navigations/Stack/FeedStackNavigator';
+import { FeedStackParamList } from '@/navigations/stack/FeedStackNavigator';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { MainDrawerParamList } from '@/navigations/drawer/MainDrawerNavigarot';
 

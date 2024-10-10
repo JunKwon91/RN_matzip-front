@@ -1,4 +1,4 @@
-import AuthStackNavigator from '../Stack/AuthStackNavigator';
+import AuthStackNavigator from '../stack/AuthStackNavigator';
 import MainDrawerNavigator from '../drawer/MainDrawerNavigarot';
 import useAuth from '@/hooks/queries/useAuth';
 

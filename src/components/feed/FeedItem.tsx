@@ -1,6 +1,6 @@
 import { ResponsePost } from '@/api';
 import { colors, feedNavigations } from '@/constants';
-import { FeedStackParamList } from '@/navigations/Stack/FeedStackNavigator';
+import { FeedStackParamList } from '@/navigations/stack/FeedStackNavigator';
 import { getDateWithSeparator } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';

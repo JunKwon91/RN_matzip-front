@@ -3,12 +3,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CalendarHomeScreen from '@/screens/calendar/CalendarHomeScreen';
-import MapStackNavigator, { MapStackParamList } from '../Stack/MapStackNavigator';
+import MapStackNavigator, { MapStackParamList } from '../stack/MapStackNavigator';
 import { colors, mainNavigations } from '@/constants';
 import { NavigatorScreenParams, RouteProp } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
 import CustomDrawerContent from './CustomDrawerContent';
-import FeedStackNavigator, { FeedStackParamList } from '../Stack/FeedStackNavigator';
+import FeedStackNavigator, { FeedStackParamList } from '../stack/FeedStackNavigator';
 
 export type MainDrawerParamList = {
   [mainNavigations.HOME]: NavigatorScreenParams<MapStackParamList>;
