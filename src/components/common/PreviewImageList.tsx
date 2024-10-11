@@ -3,7 +3,9 @@ import React from 'react';
 import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { colors } from '@/constants';
+import { colors, feedNavigations } from '@/constants';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { FeedStackParamList } from '@/navigations/stack/FeedStackNavigator';
 
 const ScrollContainer = styled.ScrollView``;
 const Container = styled.View`
@@ -51,19 +53,29 @@ interface PreviewImageListProps {
   onDelete?: (uri: string) => void;
   onChangeOrder?: (fromIndex: number, toIndex: number) => void;
   showOption?: boolean;
+  zoomEnable?: boolean;
 }
 function PreviewImageList({
   imageUris,
   onDelete,
   onChangeOrder,
   showOption = false,
+  zoomEnable = false,
 }: PreviewImageListProps) {
+  const navigation = useNavigation<NavigationProp<FeedStackParamList>>();
+
+  const handlePressImage = (index: number) => {
+    if (zoomEnable) {
+      navigation.navigate(feedNavigations.IMAGE_ZOOM, { index });
+    }
+  };
+
   return (
     <ScrollContainer horizontal showsHorizontalScrollIndicator={false}>
       <Container>
         {imageUris.map(({ uri }, index) => {
           return (
-            <ImageContainer key={index}>
+            <ImageContainer key={index} onPress={() => handlePressImage(index)}>
               <ImageView
                 resizeMode={'cover'}
                 source={{
