@@ -8,7 +8,6 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   Platform,
-  View,
 } from 'react-native';
 import styled from 'styled-components/native';
 import Octicons from 'react-native-vector-icons/Octicons';

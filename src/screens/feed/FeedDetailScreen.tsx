@@ -25,6 +25,7 @@ import useLocationStore from '@/store/useLocationStore';
 import useModal from '@/hooks/useModal';
 import FeedDetailOption from '@/components/feed/FeedDetailOption';
 import useDetailStore from '@/store/useDetailPostStore';
+import useMutateFavoritePost from '@/hooks/queries/useMutateFavoritePost';
 
 const Container = styled.ScrollView<{ insets: Insets }>`
   position: relative;
@@ -158,6 +159,7 @@ type FeedDetailScreenProps = CompositeScreenProps<
 function FeedDetailScreen({ route, navigation }: FeedDetailScreenProps) {
   const { id } = route.params;
   const { data: post, isPending, isError } = useGetPost(id);
+  const favoriteMutation = useMutateFavoritePost();
   const insets = useSafeAreaInsets();
   const { setMoveLocation } = useLocationStore();
   const { setDetailPost } = useDetailStore();
@@ -178,6 +180,10 @@ function FeedDetailScreen({ route, navigation }: FeedDetailScreenProps) {
     navigation.navigate(mainNavigations.HOME, {
       screen: mapNavigations.MAP_HOME,
     });
+  };
+
+  const handlePressFavorite = () => {
+    favoriteMutation.mutate(post.id);
   };
 
   return (
@@ -266,7 +272,12 @@ function FeedDetailScreen({ route, navigation }: FeedDetailScreenProps) {
           <BookmarkBtn
             style={({ pressed }) => pressed && styles.bookmarkPressedContainer}
           >
-            <Octicons name={'star-fill'} size={30} color={colors.GRAY_100} />
+            <Octicons
+              name={'star-fill'}
+              size={30}
+              color={post.isFavorite ? colors.YELLOW_500 : colors.GRAY_100}
+              onPress={handlePressFavorite}
+            />
           </BookmarkBtn>
           <CustomButton
             label={'위치보기'}
